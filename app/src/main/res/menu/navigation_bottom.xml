@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_video"
+        android:icon="@drawable/bottombar_icon_video_9"
+        android:title="视频" />
+    <item
+        android:id="@+id/navigation_game"
+        android:icon="@drawable/bottombar_icon_game_10"
+        android:title="游戏" />
+
+    <item
+        android:id="@+id/navigation_null"
+        android:title="0" />
+
+    <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/bottombar_icon_search_9"
+        android:title="搜索" />
+    <item
+        android:id="@+id/navigation_my"
+        android:icon="@drawable/bottombar_icon_my_9"
+        android:title="我的" />
+</menu>
