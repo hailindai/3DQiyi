@@ -4,6 +4,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -83,11 +84,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void SwitchFragment(Fragment fragment){
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .show(fragment)
-                .commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        //第一次加载，不存在currentFragment
+        if(getCurrentFragment() == null){
+            transaction.add(R.id.fragment_container, fragment).commit();
+            return;
+        }
+        if(!fragment.isAdded()){
+            transaction.hide(getCurrentFragment()).add(R.id.fragment_container, fragment).commit();
+        }else {
+            transaction.hide(getCurrentFragment()).show(fragment).commit();
+        }
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.fragment_container, fragment)
+//                .show(fragment)
+//                .commit();
+    }
+
+    public Fragment getCurrentFragment(){
+        switch(currentFragmentIndex){
+            case 0:
+                return videoFragment;
+            case 1:
+                return gameFragment;
+            case 2:
+                return searchFragment;
+            case 3:
+                return myFragment;
+        }
+        return null;
     }
 
     public void switchItem(int index) {
