@@ -1,7 +1,6 @@
 package com.dreamguard.a3dqiyi.view;
 
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,22 +8,24 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Scroller;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dreamguard.a3dqiyi.R;
-import com.dreamguard.a3dqiyi.enity.ScaleInTransformer;
-import com.dreamguard.a3dqiyi.utils.GlideCircleTransform;
-import com.dreamguard.a3dqiyi.utils.GlideRoundTransform;
-import com.dreamguard.a3dqiyi.view.video.GameBannerAdapter;
+import com.dreamguard.a3dqiyi.enity.GameRecommendationItem;
+import com.dreamguard.a3dqiyi.utils.ScaleInTransformer;
+import com.dreamguard.a3dqiyi.enity.VideoClassificationItem;
+import com.dreamguard.a3dqiyi.view.game.GameBannerAdapter;
+import com.dreamguard.a3dqiyi.view.game.GameRecommendationAdapter;
+import com.dreamguard.a3dqiyi.view.video.VideoRecommendClassificationAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,7 +39,8 @@ public class GameFragment extends Fragment {
     private ViewPager gameBannerViewPager;
     private PagerAdapter gameBannerAdapter;
 
-
+    private RecyclerView recommendationView;
+    private GameRecommendationAdapter gameRecommendationAdapter;
 
     public GameFragment() {
         // Required empty public constructor
@@ -51,6 +53,7 @@ public class GameFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game, container, false);
         gameBannerViewPager = (ViewPager) view.findViewById(R.id.game_banner);
+        recommendationView = (RecyclerView) view.findViewById(R.id.recommendation);
         return view;
     }
 
@@ -63,6 +66,17 @@ public class GameFragment extends Fragment {
         gameBannerViewPager.setPageMargin(10);
         gameBannerViewPager.setAdapter(gameBannerAdapter);
         gameBannerViewPager.setPageTransformer(true,new ScaleInTransformer());
+
+        recommendationView.setLayoutManager(new GridLayoutManager(getContext(),4));
+        List<GameRecommendationItem> gameRecommendationItems = new ArrayList<>();
+        gameRecommendationItems.add(new GameRecommendationItem("http://static.g.iqiyi.com/images/open/201712/5a3a29029d2f8.png", "萌宠大人VR"));
+        gameRecommendationItems.add(new GameRecommendationItem("http://static.g.iqiyi.com/images/open/201707/5970902cc8c19.png", "我的VR女友"));
+        gameRecommendationItems.add(new GameRecommendationItem("http://static.g.iqiyi.com/images/open/201710/59eff7d356d25.png", "顽猴西游VR"));
+        gameRecommendationItems.add(new GameRecommendationItem("http://static.g.iqiyi.com/images/open/201707/5964a22f22b93.png", "鬼吹灯之牧野诡事VR"));
+        gameRecommendationAdapter = new GameRecommendationAdapter(R.layout.item_game_recommendation,gameRecommendationItems);
+        gameRecommendationAdapter.addHeaderView(LinearLayout.inflate(getContext(),R.layout.item_game_recommendation_header,null));
+        recommendationView.setAdapter(gameRecommendationAdapter);
+
         initTimer();
     }
 

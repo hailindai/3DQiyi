@@ -1,4 +1,4 @@
-package com.dreamguard.a3dqiyi.enity;
+package com.dreamguard.a3dqiyi.utils;
 
 import android.annotation.TargetApi;
 import android.os.Build;

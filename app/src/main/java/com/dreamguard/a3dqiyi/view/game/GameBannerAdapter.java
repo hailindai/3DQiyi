@@ -1,4 +1,4 @@
-package com.dreamguard.a3dqiyi.view.video;
+package com.dreamguard.a3dqiyi.view.game;
 
 import android.content.Context;
 import android.net.Uri;
